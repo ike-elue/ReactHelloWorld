@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import Course from './Course';
-import styles from './CourseList';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import * as c from 'C:/Users/User/Desktop/HelloWorld/utils/course';
 
-const CourseSelector = ({courses}) => {
+const CourseSelector = ({courses, view}) => {
     const [selected, setSelected] = useState([]);
     
     const toggle = course => setSelected(selected => (
@@ -19,11 +18,22 @@ const CourseSelector = ({courses}) => {
               isDisabled={c.hasConflict(course, selected)}
               select = {toggle}
               isSelected={selected.includes(course)}
+              view={view}
             />
           ))
         }
       </View>
     );
   };
+
+  const styles = StyleSheet.create({
+    courseList: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    }
+  });
 
   export default CourseSelector;
