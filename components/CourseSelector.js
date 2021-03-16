@@ -31,8 +31,7 @@ const CourseSelector = ({courses, view}) => {
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'space-between'
+        alignItems: 'center'
     }
   });
 
