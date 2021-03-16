@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "helloworld": "helloworldservices-d1766",
+    "default": "helloworldservices-d1766"
+  }
+}

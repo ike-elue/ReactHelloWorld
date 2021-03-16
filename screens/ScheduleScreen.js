@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import CourseList from '../components/CourseList';
 import UserContext from '../UserContext';
-import { firebase } from '../firebase';
+import { firebase } from '../fire';
 
 const Banner = ({title}) => (
     <Text style={styles.bannerStyle}>{title || '[loading...]'}</Text>
