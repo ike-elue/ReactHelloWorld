@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import * as c from 'C:/Users/User/Desktop/HelloWorld/utils/course';
+import * as c from '../utils/course';
 
 const courseButtonBase = {
   flex: 1,

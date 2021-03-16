@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Course from './Course';
 import { StyleSheet, View } from 'react-native';
-import * as c from 'C:/Users/User/Desktop/HelloWorld/utils/course';
+import * as c from '../utils/course';
 
 const CourseSelector = ({courses, view}) => {
     const [selected, setSelected] = useState([]);

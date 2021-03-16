@@ -1,16 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
-import CourseList from 'C:/Users/User/Desktop/HelloWorld/components/CourseList';
+import CourseList from '../components/CourseList';
+import UserContext from '../UserContext';
 
 const Banner = ({title}) => (
     <Text style={styles.bannerStyle}>{title || '[loading...]'}</Text>
 );
   
 const ScheduleScreen = ({navigation}) => {
-    const [schedule, setSchedule] = useState({title: '', courses: []});
+  const user = useContext(UserContext);  
+  const canEdit = user && user.role === 'admin';
+  const [schedule, setSchedule] = useState({title: '', courses: []});
     
     const view = (course) => {
-      navigation.navigate('CourseDetailsScreen', {course} );
+      navigation.navigate(canEdit ? 'CourseEditScreen' : 'CourseDetailsScreen', { course });
     };
 
     const url = 'https://courses.cs.northwestern.edu/394/data/cs-courses.php';

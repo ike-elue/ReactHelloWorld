@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import CourseSelector from './CourseSelector';
 import TermSelector from './TermSelector';
 import { ScrollView } from 'react-native';
-import * as c from 'C:/Users/User/Desktop/HelloWorld/utils/course';
+import * as c from '../utils/course';
 
 const termMapping = {F: 'Fall', W: 'Winter', S:'Spring'};
 const terms = Object.values(termMapping);
