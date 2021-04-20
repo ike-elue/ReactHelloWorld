@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import * as Yup from 'yup';
 import Form from '../components/Form';
+import { firebase } from '../firebase.js';
 
 const validationSchema = Yup.object().shape({
   id: Yup.string()
@@ -19,6 +20,45 @@ const validationSchema = Yup.object().shape({
 
 const CourseEditScreen = ({route}) => {
   const course = route.params.course;
+  const [submitError, setSubmitError] = useState('');
+
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    const db = firebase.database().ref();
+    const handleData = snap => {
+    if (snap.val()) setEntries(snap.val()["courses"]);
+      else setEntries([]);
+    }
+    db.on('value', handleData, error => alert(error));
+    return () => { db.off('value', handleData); };
+  }, []);
+
+  var data = [];
+  for (var id in entries) {
+    var temp = entries[id];
+    temp["firebaseid"] = id;
+    data.push(temp);
+  }
+
+  async function handleSubmit(values, data) {
+  
+    const { id, meets, title } = values;
+
+    var firebaseID = id;
+    let entry = data.find(e => {
+        return e.id === id;
+    })
+
+    if(entry) {
+      firebaseID = entry["firebaseid"];
+    }
+
+    const course = { id, meets, title };
+    firebase.database().ref('courses').child(firebaseID).set(course).catch(error => {
+      setSubmitError(error.message);
+    });
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,6 +70,7 @@ const CourseEditScreen = ({route}) => {
             title: course.title
           }}
           validationSchema={validationSchema}
+          onSubmit={values => handleSubmit(values, data)}
         >
           <Form.Field
             name="id"
@@ -49,6 +90,8 @@ const CourseEditScreen = ({route}) => {
             leftIcon="format-title"
             placeholder=""
           />
+          <Form.Button title={'Update'} />
+          {<Form.ErrorMessage error={submitError} visible={true} />}
         </Form>
       </ScrollView>
     </SafeAreaView>

@@ -2,12 +2,13 @@ import React, {useContext, useState, useEffect} from 'react';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import CourseList from '../components/CourseList';
 import UserContext from '../UserContext';
-import { firebase } from '../fire';
+import { firebase } from '../firebase.js';
+import { getCourseNumber } from '../utils/course.js';
 
 const Banner = ({title}) => (
     <Text style={styles.bannerStyle}>{title || '[loading...]'}</Text>
 );
-  
+
 const fixCourses = json => ({
   ...json,
   courses: Object.values(json.courses)
@@ -25,7 +26,7 @@ const ScheduleScreen = ({navigation}) => {
     useEffect(() => {
       const db = firebase.database().ref();
       const handleData = snap => {
-        if (snap.val()) setSchedule(fixCourses(snap.val()));
+        if (snap.val()) {setSchedule(fixCourses(snap.val())); console.log(fixCourses(snap.val()));}
       }
       db.on('value', handleData, error => alert(error));
       return () => { db.off('value', handleData); };
