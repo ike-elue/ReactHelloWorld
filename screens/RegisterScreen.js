@@ -38,7 +38,6 @@ const RegisterScreen = ({ navigation }) => {
         setSignInError(null);
         try {
           const authCredential = await registerWithEmail(email, password);
-          console.log(authCredential)
           const user = authCredential.user;
           await user.updateProfile({displayName: name});
           navigation.navigate('ScheduleScreen');
@@ -48,7 +47,6 @@ const RegisterScreen = ({ navigation }) => {
       }
     
       async function handleOnSubmit(values) {
-        console.log(values)
         return values.confirm ? handleOnSignUp(values) : handleOnLogin(values);
       }
 
